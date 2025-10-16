@@ -12,15 +12,18 @@ import com.example.appcafeleblanc.ui.theme.AppCafeLeBlancTheme // Para el Previe
  * (Cumple con la Parte 3, punto 4 de la guía).
  */
 @Composable
-fun HomeScreen2() { // fun HomeScreen2() [cite: 132]
+fun HomeScreen2() { // fun HomeScreen2()
     val windowSizeClass = obtenerWindowSizeClass() // Llamada a la utilidad
 
-    when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> HomeScreenCompacta() // Llama a la vista pequeña [cite: 134]
-        WindowWidthSizeClass.Medium -> HomeScreenMediana() // Llama a la vista mediana [cite: 134]
-        WindowWidthSizeClass.Expanded -> HomeScreenExpandida() // Llama a la vista expandida [cite: 137]
+    // ¡CAMBIO AQUI! Usa windowSizeClass directamente
+    when (windowSizeClass) {
+        WindowWidthSizeClass.Compact -> HomeScreenCompacta() // Llama a la vista pequeña
+        WindowWidthSizeClass.Medium -> HomeScreenMediana() // Llama a la vista mediana
+        WindowWidthSizeClass.Expanded -> HomeScreenExpandida() // Llama a la vista expandida
     }
 }
+
+// ... (resto del código)
 
 
 @Preview(showBackground = true)

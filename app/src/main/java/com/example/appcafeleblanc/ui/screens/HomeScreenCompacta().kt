@@ -1,70 +1,84 @@
-package com.example.appcafeleblanc.ui.screens // 1. Paquete CORREGIDO
+package com.example.appcafeleblanc.ui.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.appcafeleblanc.R // 2. Referencia a recursos CORREGIDA
-import com.example.appcafeleblanc.ui.theme.AppCafeLeBlancTheme // 3. Importación del tema de tu app
+import com.example.appcafeleblanc.ui.theme.LeBlancAccent
+import com.example.appcafeleblanc.ui.theme.LeBlancDark
+import com.example.appcafeleblanc.ui.theme.LeBlancText
+import com.example.appcafeleblanc.ui.theme.AppCafeLeBlancTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+// Esta pantalla ASUME que HeaderLeBlanc, CategoriaMenu, ItemMenuCard y OfertaBanner
+// están definidos en este mismo paquete o han sido importados correctamente.
+
 @Composable
 fun HomeScreenCompacta() {
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text(text = "Mi App Kotlin") }) // [cite: 72]
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues = innerPadding) // [cite: 82]
-                .fillMaxSize() // [cite: 84]
-                .padding(all = 15.dp),
-            verticalArrangement = Arrangement.spacedBy(space = 20.dp) // [cite: 87-88]
-        ) {
-            Text(
-                text = "¡Bienvenido!", // [cite: 97]
-                color = MaterialTheme.colorScheme.primary, // [cite: 98]
-                style = MaterialTheme.typography.titleLarge // [cite: 99]
-            )
+    // Estado local simulado del carrito (reemplaza por ViewModel real)
+    var cartCount by remember { mutableStateOf(0) }
 
-            Button(onClick = { /* acción futura */ }) { // [cite: 100]
-                Text(text = "Presióname") // [cite: 101]
+    Scaffold(
+        containerColor = LeBlancDark,
+        topBar = { HeaderLeBlanc() },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = { /* Navegar al carrito */ },
+                containerColor = LeBlancAccent,
+                icon = { Icon(Icons.Filled.ShoppingCart, contentDescription = "Carrito", tint = LeBlancText) },
+                // Muestra la cantidad de ítems en el carrito
+                text = { Text("Carrito ($cartCount)", color = LeBlancText) }
+            )
+        },
+        floatingActionButtonPosition = FabPosition.End
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentPadding = PaddingValues(bottom = 80.dp)
+        ) {
+
+            // SECCIÓN: Banner de Promociones (LazyRow)
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 8.dp)
+                ) {
+                    item { OfertaBanner("Curry Especial", "¡Doble porción de arroz hoy!") }
+                    item { OfertaBanner("Blend de Sojiro", "El mejor café de Shujin.") }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
-//            Image(
-//                painter = painterResource(id = R.drawable.logo), // [cite: 109]
-//                contentDescription = "Logo App", // [cite: 110]
-//                modifier = Modifier
-//                    .fillMaxWidth() // [cite: 112]
-//                    .height(height = 150.dp), // [cite: 113]
-//                contentScale = ContentScale.Fit // [cite: 114, 118]
-//            )
+            // 1. Café Especial
+            item { CategoriaMenu(titulo = "Café & Bebidas") }
+            item { ItemMenuCard("Blue Mountain Blend", "¥ 5,000") { change -> cartCount += change } }
+            item { ItemMenuCard("Café y Té", "¥ 300") { change -> cartCount += change } }
+
+            // 2. Platos Calientes Japoneses
+            item { CategoriaMenu(titulo = "Platos Calientes (Curry)") }
+            item { ItemMenuCard("Curry Especial del Jefe", "¥ 850") { change -> cartCount += change } }
+            item { ItemMenuCard("Curry con Tonkatsu", "¥ 1,200") { change -> cartCount += change } }
+
+            // 3. Postres
+            item { CategoriaMenu(titulo = "Postres & Dulces") }
+            item { ItemMenuCard("Panqueques Secretos", "¥ 700") { change -> cartCount += change } }
+            item { ItemMenuCard("Pastel de Matcha", "¥ 650") { change -> cartCount += change } }
+
+            item { Spacer(modifier = Modifier.height(32.dp)) }
         }
     }
 }
 
-// -----------------------------------------------------------
-
-@Preview(name = "Compact", widthDp = 360, heightDp = 800) // [cite: 139]
+@Preview(showBackground = true, widthDp = 411, heightDp = 891)
 @Composable
-fun PreviewCompact() {
-    // Usar el tema de tu aplicación
+fun HomeScreenCompactaPreview() {
     AppCafeLeBlancTheme {
         HomeScreenCompacta()
     }
