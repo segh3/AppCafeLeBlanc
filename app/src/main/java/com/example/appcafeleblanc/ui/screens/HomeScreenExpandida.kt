@@ -12,14 +12,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.appcafeleblanc.ui.theme.*
+// << NUEVAS IMPORTACIONES >>
+import com.example.appcafeleblanc.ui.theme.* import com.example.appcafeleblanc.ui.components.* // Importa los componentes ahora desde 'components'
 
 @Composable
 fun HomeScreenExpandida() {
     Scaffold(
         containerColor = LeBlancDark,
         topBar = { HeaderLeBlanc() }
-        // No hay FAB, ya que el carrito es una columna fija.
     ) { paddingValues ->
         Row(
             modifier = Modifier
@@ -34,6 +34,7 @@ fun HomeScreenExpandida() {
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 item { CategoriaMenu(titulo = "Café & Bebidas") }
+                // <<<< LIMPIO: Ya no necesita onCartUpdate = {} >>>>
                 item { ItemMenuCard("Blue Mountain Blend", "¥ 5,000") }
                 item { ItemMenuCard("Café y Té", "¥ 300") }
 
@@ -53,7 +54,7 @@ fun HomeScreenExpandida() {
                 modifier = Modifier
                     .weight(0.35f)
                     .fillMaxHeight(),
-                color = LeBlancMedium // Un tono más claro para diferenciar la sección
+                color = LeBlancMedium
             ) {
                 Column(
                     modifier = Modifier
@@ -70,7 +71,6 @@ fun HomeScreenExpandida() {
                             color = LeBlancText
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        // Aquí iría el contenido dinámico del carrito
                         Text(
                             "Aún no hay items. ¡Elige algo!",
                             color = LeBlancText.copy(alpha = 0.6f)

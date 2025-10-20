@@ -14,11 +14,8 @@ import com.example.appcafeleblanc.ui.theme.LeBlancAccent
 import com.example.appcafeleblanc.ui.theme.LeBlancDark
 import com.example.appcafeleblanc.ui.theme.LeBlancText
 import com.example.appcafeleblanc.ui.theme.AppCafeLeBlancTheme
-
-// Esta pantalla ASUME que HeaderLeBlanc, CategoriaMenu, ItemMenuCard y OfertaBanner
-// están definidos en este mismo paquete o han sido importados correctamente.
-
-@Composable
+// << CORRECCIÓN >> Importa los componentes ahora desde el paquete 'components'
+import com.example.appcafeleblanc.ui.components.* @Composable
 fun HomeScreenCompacta() {
     // Estado local simulado del carrito (reemplaza por ViewModel real)
     var cartCount by remember { mutableStateOf(0) }
@@ -58,6 +55,7 @@ fun HomeScreenCompacta() {
 
             // 1. Café Especial
             item { CategoriaMenu(titulo = "Café & Bebidas") }
+            // << IMPORTANTE >> El onCartUpdate se mantiene aquí, ya que actualiza el cartCount.
             item { ItemMenuCard("Blue Mountain Blend", "¥ 5,000") { change -> cartCount += change } }
             item { ItemMenuCard("Café y Té", "¥ 300") { change -> cartCount += change } }
 

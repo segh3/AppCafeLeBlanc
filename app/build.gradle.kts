@@ -41,17 +41,24 @@ android {
 
 dependencies {
     // DEPENDENCIAS NECESARIAS PARA LA ADAPTABILIDAD
-    // 1. Material3 Window Size Class (para WindowSizeClass)
-    implementation("androidx.compose.material3:material3-window-size-class:1.1.2") // [cite: 7]
-
-    // 2. activity-compose (para resolver LocalActivity)
-    // Reemplazamos 'libs.androidx.activity.compose' por la dependencia literal para asegurar la resolución:
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
     implementation("androidx.activity:activity-compose:1.9.0")
+
+    // =========================================================
+    // << DEPENDENCIAS AÑADIDAS PARA VIEWMODEL Y NAVEGACIÓN >>
+    // =========================================================
+
+    // NAVIGATION COMPOSE
+    implementation("androidx.navigation:navigation-compose:2.7.4")
+
+    // LIFECYCLE VIEWMODEL COMPOSE (Para usar viewModel() y StateFlows)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    // =========================================================
 
     // Dependencias originales del proyecto:
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Se ha comentado o eliminado la línea original: implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)

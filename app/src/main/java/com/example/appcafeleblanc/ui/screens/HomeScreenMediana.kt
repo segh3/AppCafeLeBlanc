@@ -9,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+// << NUEVAS IMPORTACIONES >>
 import com.example.appcafeleblanc.ui.theme.LeBlancAccent
 import com.example.appcafeleblanc.ui.theme.LeBlancDark
 import com.example.appcafeleblanc.ui.theme.LeBlancText
 import com.example.appcafeleblanc.ui.theme.AppCafeLeBlancTheme
+import com.example.appcafeleblanc.ui.components.* // Importa los componentes ahora desde 'components'
 
 @Composable
 fun HomeScreenMediana() {
@@ -20,7 +22,6 @@ fun HomeScreenMediana() {
         containerColor = LeBlancDark,
         topBar = { HeaderLeBlanc() },
         floatingActionButton = {
-            // Mantenemos el FAB, pero podemos hacerlo más pequeño
             FloatingActionButton(
                 onClick = { /* Ir a la pantalla de pedido */ },
                 containerColor = LeBlancAccent,
@@ -30,16 +31,16 @@ fun HomeScreenMediana() {
         },
         floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
-        // Usamos LazyColumn, pero los elementos tienen más espacio horizontal
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 48.dp), // Añadimos margen lateral
+                .padding(horizontal = 48.dp),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
             // Reutilizamos el mismo contenido de menú
             item { CategoriaMenu(titulo = "Café & Bebidas") }
+            // <<<< LIMPIO: Ya no necesita onCartUpdate = {} >>>>
             item { ItemMenuCard("Blue Mountain Blend", "¥ 5,000") }
             item { ItemMenuCard("Café y Té", "¥ 300") }
 
